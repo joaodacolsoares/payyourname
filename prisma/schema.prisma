@@ -10,7 +10,7 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model Nickname {
+model NicknameEntity {
   id    Int      @id @default(autoincrement())
   name  String
   amount Float
