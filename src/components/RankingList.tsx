@@ -7,10 +7,13 @@ interface RankingListProps {
 
 export default function RankingList({ persons } : RankingListProps) {
   return (
-    <ol>
-      {
-        persons.map(person => (<RankingListItem person={person} />))
-      }
-    </ol>
+    <>
+      <h2 className='mb-4 text-3xl'>Ranking</h2>
+      <ol>
+        {
+          persons.map(person => (<RankingListItem person={person} />))
+        }
+      </ol>
+    </>
   );
 }

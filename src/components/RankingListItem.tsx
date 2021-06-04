@@ -6,6 +6,6 @@ interface RankingListItemProps {
 
 export default function RankingListItem({ person } : RankingListItemProps) {
   return (
-    <li className='p-2 mb-3 bg-gray-600'>{person.name}</li>
+    <li className='p-2 mb-2 rounded border-b border-blue-300'>{person.name}</li>
   );
 }
