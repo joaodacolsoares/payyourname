@@ -1,34 +1,45 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Eternity
 
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
+## Quick setup
+- Clone the repository with 
+```
+  git clone https://github.com/joaodacolsoares/eternity.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Install all the dependencies with the command:
+```
+  yarn
+```
+- Set up Postgres
+- Set all the ENV variables based on the `.env.template` file
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Run locally
+To run the service just run the command below:
+```
+  yarn dev
+```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Prisma
 
-## Learn More
+Because Prisma Client is tailored to your own schema, you need to update it every time your Prisma schema file is changing by running the following command:
 
-To learn more about Next.js, take a look at the following resources:
+```
+npx prisma generate
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+To create a new migration by changing the Schema you can run the command:
+```
+prisma migrate dev --name ${MIGRATION_NAME}
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Run webhook locally
+To run the proxy of the webhook to your localhost you need to follow the steps below:
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- Download Stripe CLI
+- Login in Stripe CLI
+- Run the following command pointing to the Next web server port
+```
+stripe listen --forward-to localhost:${NEXT_SERVER_PORT}/api/create-nickname
+```
+- Set the STRIPE_WEBHOOK_SECRET based on the secret that will appear in the top of the console when running the command above.

@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next"
 import { PrismaClient } from '@prisma/client'
 
 const Stripe = require('stripe')
-const stripe = Stripe(process.env.STRIPE_SECRET_TEST);
+const stripe = Stripe(process.env.STRIPE_SECRET);
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
 const prisma = new PrismaClient()
