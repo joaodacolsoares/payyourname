@@ -1,9 +1,10 @@
-import Person from "../interfaces/Person";
+import Nickname from "../interfaces/Nickname";
 import RankingListItem from "./RankingListItem";
 
 interface RankingListProps {
-  persons: Person[]
+  persons: Nickname[]
 }
+
 
 export default function RankingList({ persons } : RankingListProps) {
   return (

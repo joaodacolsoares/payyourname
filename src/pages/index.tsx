@@ -1,20 +1,23 @@
 import Head from 'next/head'
 import RankingList from '../components/RankingList'
-import Person from '../interfaces/Person'
+import Nickname from '../interfaces/Nickname'
+import Header from '../components/Header';
 import { loadStripe } from '@stripe/stripe-js'
 import ProductSession from '../components/ProductSession'
 import axios from 'axios'
+import { GetServerSideProps, GetServerSidePropsContext } from 'next'
+import { PrismaClient } from '@prisma/client'
+import { NicknameTransformer } from '../transformer/NicknameTransformer'
 
+const prisma = new PrismaClient();
 
-const PUBLIC_KEY = 'pk_test_51IyfoeG8cr2ZNrKwwE36Nd7s2ZsCw7iHPAS9Lc52SiCX0PwvdiLUnZzDj5R3dF7AENbia5dh51sUmUjyoPvHxrKY00X09AGlYm'
-const stripeTestPromise = loadStripe(PUBLIC_KEY)
+const stripeTestPromise = loadStripe(process.env.STRIPE_PUBLIC_TEST);
 
-export default function Home() {
-  const persons : Person[] = [
-    { name: 'Pipo'},
-    { name: 'Aca'},
-    { name: 'Proko'}
-  ]
+interface HomeProps {
+  nicknameList: Nickname[]
+}
+
+export default function Home({ nicknameList }: HomeProps) {
 
   const handleClick = async () => {
     const stripe = await stripeTestPromise;
@@ -53,10 +56,23 @@ export default function Home() {
           </div>
         </div>
 
-        <RankingList persons={persons}/>
+        <RankingList persons={nicknameList}/>
       </div>
-      
-      
     </div>
   )
+}
+
+
+export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
+  const nicknames = await prisma.nicknameEntity.findMany({
+    orderBy: [{
+      amount: 'desc'
+    }]
+  })
+
+  return {
+    props: {
+      nicknameList: nicknames.map<Nickname>(NicknameTransformer.mapTo)
+    }
+  }
 }
