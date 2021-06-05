@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import Header from '../components/Header'
 import RankingList from '../components/RankingList'
 import Nickname from '../interfaces/Nickname'
 import { loadStripe } from '@stripe/stripe-js'
