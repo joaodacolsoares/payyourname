@@ -1,6 +1,4 @@
-import React, { useState } from 'react'
-import axios from 'axios'
-import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js'
+import React from 'react'
 
 interface PaymentFormProps {
   handleClick: () => void
