@@ -1,7 +1,6 @@
 import Head from 'next/head'
 import RankingList from '../components/RankingList'
 import Nickname from '../interfaces/Nickname'
-import Header from '../components/Header';
 import { loadStripe } from '@stripe/stripe-js'
 import ProductSession from '../components/ProductSession'
 import axios from 'axios'
@@ -11,8 +10,7 @@ import { NicknameTransformer } from '../transformer/NicknameTransformer'
 
 const prisma = new PrismaClient();
 
-const stripeTestPromise = loadStripe(process.env.STRIPE_PUBLIC_TEST);
-
+const stripeTestPromise = loadStripe('pk_test_51IyfoeG8cr2ZNrKwwE36Nd7s2ZsCw7iHPAS9Lc52SiCX0PwvdiLUnZzDj5R3dF7AENbia5dh51sUmUjyoPvHxrKY00X09AGlYm');
 interface HomeProps {
   nicknameList: Nickname[]
 }
@@ -22,7 +20,8 @@ export default function Home({ nicknameList }: HomeProps) {
   const handleClick = async () => {
     const stripe = await stripeTestPromise;
     const response = await axios.post("/api/create-checkout-session", {
-      amount: 100
+      nickname: 'Proko',
+      amount: 110
     });
     const session = response.data;
     const result = await stripe.redirectToCheckout({
