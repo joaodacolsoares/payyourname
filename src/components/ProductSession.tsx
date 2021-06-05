@@ -1,12 +1,13 @@
 import React from 'react'
 
 interface PaymentFormProps {
-  handleClick: () => void
+  handleClick: () => void,
+  price: number
 }
 
-export default function PaymentForm({ handleClick } : PaymentFormProps) {
+export default function PaymentForm({ handleClick, price } : PaymentFormProps) {
   return (
-    <section className='w-full p-5 bg-gray-100 rounded-lg flex flex-col'>
+    <section className='w-full p-5 h-full justify-center bg-gray-100 rounded-lg flex flex-col'>
       <div className="flex  mb-2">
         <img
           className='w-16 h-16 rounded mr-2'
@@ -15,7 +16,7 @@ export default function PaymentForm({ handleClick } : PaymentFormProps) {
         />
         <div className="description flex flex-col justify-center">
           <h3 className='font-bold text-sm'>Eternal Nickname</h3>
-          <h5 className='text-sm text-gray-500'>$1.00</h5>
+          <h5 className='text-sm text-gray-500'>${price || 0}</h5>
         </div>
       </div>
       <button 
