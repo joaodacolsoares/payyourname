@@ -5,7 +5,7 @@ export default function About() {
   return (
     <div className='min-h-screen flex items-center flex-col'>
       <Head>
-        <title>Eternity</title>
+        <title>Eternity - About</title>
         <meta name='description' content='Eternity App' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
