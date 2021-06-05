@@ -11,9 +11,7 @@ import { NicknameTransformer } from '../transformer/NicknameTransformer'
 
 const prisma = new PrismaClient();
 
-const PUBLIC_KEY = 'pk_test_51IyfoeG8cr2ZNrKwwE36Nd7s2ZsCw7iHPAS9Lc52SiCX0PwvdiLUnZzDj5R3dF7AENbia5dh51sUmUjyoPvHxrKY00X09AGlYm';
-
-const stripeTestPromise = loadStripe(PUBLIC_KEY);
+const stripeTestPromise = loadStripe(process.env.STRIPE_PUBLIC_TEST);
 
 interface HomeProps {
   nicknameList: Nickname[]
