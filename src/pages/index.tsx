@@ -34,21 +34,18 @@ export default function Home() {
   };
 
   return (
-    <div className='min-h-screen p-6 flex items-center flex-col'>
+    <div className='min-h-screen flex items-center flex-col'>
       <Head>
         <title>Eternity</title>
         <meta name='description' content='Eternity App' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
 
-      <div className='max-w-7xl w-full'>
-        <h1 className='text-5xl mb-8'>
-          Eternity
-        </h1>
+      <Header/>
 
-        <div className='flex items-center justify-between mb-8'>
-          <div className='w-1/3'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas dignissim bibendum turpis ac aliquet. Nullam non blandit felis. Donec fermentum risus nec</div>
-          <div className='w-1/3'>
+      <div className='max-w-5xl w-full mt-8'>
+        <div className='flex flex-col items-center justify-end mb-8 sm:flex-row'>
+          <div className='w-full sm:w-1/3'>
             <ProductSession handleClick={handleClick}/>
           </div>
         </div>
