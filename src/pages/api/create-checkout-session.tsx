@@ -1,5 +1,4 @@
 import { NextApiRequest, NextApiResponse } from "next"
-
 const stripe = require('stripe')(process.env.STRIPE_SECRET);
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
@@ -26,8 +25,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         amount
       },
       mode: 'payment',
-      success_url: `http://localhost:3000/?success=true`,
-      cancel_url: `http://localhost:3000/?canceled=true`,
+      success_url: `${req.headers.origin}/?success=true`,
+      cancel_url: `${req.headers.origin}/?canceled=true`,
     })
 
     res.json({ id: session.id });
