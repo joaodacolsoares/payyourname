@@ -1,12 +1,11 @@
 import { buffer } from 'micro';
 import { NextApiRequest, NextApiResponse } from "next"
 import { PrismaClient } from '@prisma/client'
+import prisma from '../../lib/prisma';
 
 const Stripe = require('stripe')
 const stripe = Stripe(process.env.STRIPE_SECRET);
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
-
-const prisma = new PrismaClient()
 
 export const config = {
   api: {
