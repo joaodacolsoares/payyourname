@@ -16,7 +16,7 @@ export default function PaymentForm({ handleClick, price } : PaymentFormProps) {
         />
         <div className="description flex flex-col justify-center">
           <h3 className='font-bold text-sm'>Eternal Nickname</h3>
-          <h5 className='text-sm text-gray-500'>${price || 0}.00</h5>
+          <h5 className='text-sm text-gray-500'>${price || 0}</h5>
         </div>
       </div>
       <button 
