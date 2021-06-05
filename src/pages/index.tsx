@@ -6,11 +6,9 @@ import { loadStripe } from '@stripe/stripe-js'
 import ProductSession from '../components/ProductSession'
 import axios from 'axios'
 import { GetServerSideProps, GetServerSidePropsContext } from 'next'
-import { PrismaClient } from '@prisma/client'
 import { NicknameTransformer } from '../transformer/NicknameTransformer'
 import { useState } from 'react'
-
-const prisma = new PrismaClient();
+import prisma from '../lib/prisma'
 
 const stripeTestPromise = loadStripe('pk_test_51IyfoeG8cr2ZNrKwwE36Nd7s2ZsCw7iHPAS9Lc52SiCX0PwvdiLUnZzDj5R3dF7AENbia5dh51sUmUjyoPvHxrKY00X09AGlYm');
 interface HomeProps {
