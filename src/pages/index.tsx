@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import Image from 'next/image'
 import Header from '../components/Header'
 import RankingList from '../components/RankingList'
 import Nickname from '../interfaces/Nickname'
@@ -48,22 +49,24 @@ export default function Home({ nicknameList }: HomeProps) {
   }
 
   return (
-    <div className='min-h-screen flex items-center flex-col'>
+    <div className='min-h-screen flex items-center flex-col bg-background scroll-snap-none relative'>
       <Head>
         <title>Eternity</title>
         <meta name='description' content='Eternity App' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
 
-      <Header/>
+      <div className='w-full mt-8 px-4 max-w-screen-2xl z-10'>
+        <Header/>
 
-      <div className='max-w-5xl w-full mt-8'>
-        <div className='flex flex-col items-stretch justify-between mb-8 sm:flex-row'>
-          <div className='p-5 bg-gray-100 rounded-lg w-full sm:w-2/4 mr-2 flex flex-col'>
-            <input className='mb-4 p-4 rounded' placeholder='Name' onChange={onNameChange} value={name}/>
-            <input className='p-4 rounded' placeholder='US$ 0,00 ' onChange={onAmountChange} value={amount} />
+        <div className='flex flex-col items-center justify-between mb-8 sm:flex-row mt-6'>
+          <div className='rounded-lg w-full lg:w-3/5 lg:mr-12 flex flex-col'>
+            <h1 className='leading-snug text-4xl font-bold text-white lg:leading-snug lg:text-6xl'>Leave Your Mark <br/>like <span className='text-main'>Pipo</span></h1>
+            <p className='text-1x1 lg:text-2xl text-white mt-3'>
+              We want to make 1 US$ in the internet to prove to our parents. loren ipsun sdafjasjd gfjsda gjsadg asdgj 
+            </p>
           </div>
-          <div className='w-full sm:w-2/4'>
+          <div className='w-full mt-8 lg:w-2/5 lg:mt-0 '>
             <ProductSession handleClick={handleClick} price={amount}/>
           </div>
         </div>
