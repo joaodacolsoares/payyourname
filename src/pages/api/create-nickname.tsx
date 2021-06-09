@@ -31,18 +31,21 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
       await createNicknameIfNotExists(nickname);
       await createDonation(nickname, amount);
-      
+
       res.status(200);
     }
   }
 }
 
 const createNicknameIfNotExists = async (nickname: string) => {
-  await prisma.nicknameEntity.create({
-    data: {
-      name: nickname
-    }
-  })
+  const nicknameEntity = await prisma.nicknameEntity.findFirst({ where: { name: nickname } });
+  if (nicknameEntity) {
+    await prisma.nicknameEntity.create({
+      data: {
+        name: nickname
+      }
+    })
+  }
 }
 
 const createDonation = async (nickname: string, amountToBeAdded: number) => {
