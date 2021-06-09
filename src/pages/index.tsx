@@ -84,10 +84,12 @@ export const getServerSideProps: GetServerSideProps = async () => {
       donations: true
     },
   })
-
+  const sortedNicknames = nicknames
+    .map<Nickname>(NicknameTransformer.mapTo)
+    .sort((nicknameA, nicknameB) => nicknameA.amount - nicknameB.amount);
   return {
     props: {
-      nicknameList: nicknames.map<Nickname>(NicknameTransformer.mapTo)
+      nicknameList: sortedNicknames
     }
   }
 }
