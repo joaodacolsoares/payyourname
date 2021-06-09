@@ -78,16 +78,18 @@ export default function Home({ nicknameList }: HomeProps) {
 }
 
 
-export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const nicknames = await prisma.nicknameEntity.findMany({
-    orderBy: [{
-      amount: 'desc'
-    }]
+    include: {
+      donations: true
+    },
   })
-
+  const sortedNicknames = nicknames
+    .map<Nickname>(NicknameTransformer.mapTo)
+    .sort((nicknameA, nicknameB) => nicknameA.amount - nicknameB.amount);
   return {
     props: {
-      nicknameList: nicknames.map<Nickname>(NicknameTransformer.mapTo)
+      nicknameList: sortedNicknames
     }
   }
 }
