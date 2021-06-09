@@ -4,7 +4,7 @@ import Header from '../components/Header'
 import RankingList from '../components/RankingList'
 import Nickname from '../interfaces/Nickname'
 import { loadStripe } from '@stripe/stripe-js'
-import ProductSession from '../components/ProductSession'
+import Checkout from '../components/Checkout'
 import axios from 'axios'
 import { GetServerSideProps, GetServerSidePropsContext } from 'next'
 import { NicknameTransformer } from '../transformer/NicknameTransformer'
@@ -17,10 +17,7 @@ interface HomeProps {
 }
 
 export default function Home({ nicknameList }: HomeProps) {
-  const [name, setName] = useState('')
-  const [amount, setAmount] = useState()
-
-  const handleClick = async () => {
+  const handleClick = async (name, amount) => {
     const stripe = await stripeTestPromise;
     const response = await axios.post("/api/create-checkout-session", {
       nickname: name,
@@ -38,15 +35,7 @@ export default function Home({ nicknameList }: HomeProps) {
     }
   };
 
-  const onNameChange = (event) => {
-    const { value } = event.target
-    setName(value)
-  }
 
-  const onAmountChange = (event) => {
-    const { value } = event.target
-    setAmount(value)
-  }
 
   return (
     <div className='min-h-screen flex items-center flex-col bg-background scroll-snap-none relative'>
@@ -67,7 +56,7 @@ export default function Home({ nicknameList }: HomeProps) {
             </p>
           </div>
           <div className='w-full mt-8 lg:w-2/5 lg:mt-0 '>
-            <ProductSession handleClick={handleClick} price={amount}/>
+            <Checkout handleClick={handleClick} />
           </div>
         </div>
 
