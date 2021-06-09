@@ -78,11 +78,11 @@ export default function Home({ nicknameList }: HomeProps) {
 }
 
 
-export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const nicknames = await prisma.nicknameEntity.findMany({
-    orderBy: [{
-      amount: 'desc'
-    }]
+    include: {
+      donations: true
+    },
   })
 
   return {
