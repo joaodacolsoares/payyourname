@@ -1,7 +1,8 @@
 import { buffer } from 'micro';
+import { StatusCodes } from 'http-status-codes'
 import { NextApiRequest, NextApiResponse } from "next"
-import { PrismaClient } from '@prisma/client'
 import prisma from '../../lib/prisma';
+import { HttpMethods } from '../../constants/HttpMethods';
 
 const Stripe = require('stripe')
 const stripe = Stripe(process.env.STRIPE_SECRET);
@@ -14,7 +15,7 @@ export const config = {
 }
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  if (req.method === 'POST') {
+  if (req.method === HttpMethods.POST) {
     const buf = await buffer(req);
     const sig = req.headers['stripe-signature'];
     let event;
@@ -22,7 +23,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     try {
       event = stripe.webhooks.constructEvent(buf.toString(), sig, endpointSecret);
     } catch (err) {
-      return res.status(400).send(`Webhook Error: ${err.message}`);
+      return res.status(StatusCodes.BAD_REQUEST).send(`Webhook Error: ${err.message}`);
     }
 
     if (event.type === 'checkout.session.completed') {
@@ -44,6 +45,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       })
     }
 
-    res.status(200);
+    res.status(StatusCodes.ACCEPTED);
   }
 }

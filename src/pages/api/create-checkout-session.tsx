@@ -1,8 +1,9 @@
 import { NextApiRequest, NextApiResponse } from "next"
+import { HttpMethods } from "../../constants/HttpMethods";
 const stripe = require('stripe')(process.env.STRIPE_SECRET);
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  if (req.method === 'POST') {
+  if (req.method === HttpMethods.POST) {
     let { nickname, amount } = req.body
 
     const session = await stripe.checkout.sessions.create({ 
