@@ -79,11 +79,15 @@ export const getServerSideProps: GetServerSideProps = async () => {
 }
 
 const getSortedNicknames = (nicknames: Nickname[]): Nickname[] => {
+  if (!nicknames)
+    return []
   return nicknames
     .sort((nicknameA, nicknameB) => nicknameB.amount - nicknameA.amount);
 }
 
 const getTopNickname = (nicknames: Nickname[]): Nickname => {
+  if (!nicknames)
+    return null;
   return nicknames.reduce((accumulator, currentValue) => {
     if (currentValue.amount > accumulator.amount)
       return currentValue;
