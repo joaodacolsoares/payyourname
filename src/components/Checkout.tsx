@@ -50,7 +50,7 @@ export default function Checkout({ handleClick } : PaymentFormProps) {
         Pay your name
       </button>
 
-      <img className='absolute right-3/4 top-3/4 max-w-7xl w-auto h-auto hidden lg:flex' src="/hand.png" alt="" />
+      <img className='hand absolute right-3/4 top-3/4 w-auto h-auto hidden lg:flex' src="/hand.png" alt="" />
 
     </section>
   )

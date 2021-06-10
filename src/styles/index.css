@@ -3,6 +3,10 @@
 @import 'tailwindcss/utilities';
 
 @layer components {
+  body {
+    @apply bg-background
+  }
+  
   .bg-transparent {
     background: transparent;
   }
@@ -10,7 +14,25 @@
   .from-black-to-transparent {
     background: radial-gradient(99.06% 50697.66% at 1.74% 0%, rgba(28, 28, 28, 0.56) 0%, rgba(28, 28, 28, 0.08) 100%);
   }
+
+  .hand {
+    max-width: 70vw;
+    transform: translate(-100px, 20px);
+    animation: handMove infinite 10s;
+    animation-delay: 5s;
+  }
+  
+  @keyframes handMove {
+    0% {
+      transform: translate(-100px, 20px);
+    }
+
+    5% {
+      transform: translate(0px, 0px);
+    }
+
+    10% {
+      transform: translate(-100px, 20px);
+    }
+  }
 }
-
-/* Your own custom utilities */
-
