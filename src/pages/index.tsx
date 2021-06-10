@@ -1,22 +1,22 @@
+import { DonationEntity } from '.prisma/client'
+import { loadStripe } from '@stripe/stripe-js'
+import axios from 'axios'
+import { GetServerSideProps } from 'next'
 import Head from 'next/head'
-import Image from 'next/image'
+import Checkout from '../components/Checkout'
 import Header from '../components/Header'
 import RankingList from '../components/RankingList'
 import Nickname from '../interfaces/Nickname'
-import { loadStripe } from '@stripe/stripe-js'
-import Checkout from '../components/Checkout'
-import axios from 'axios'
-import { GetServerSideProps, GetServerSidePropsContext } from 'next'
-import { NicknameTransformer } from '../transformer/NicknameTransformer'
-import { useState } from 'react'
 import prisma from '../lib/prisma'
+import { NicknameTransformer } from '../transformer/NicknameTransformer'
 
 const stripeTestPromise = loadStripe('pk_test_51IyfoeG8cr2ZNrKwwE36Nd7s2ZsCw7iHPAS9Lc52SiCX0PwvdiLUnZzDj5R3dF7AENbia5dh51sUmUjyoPvHxrKY00X09AGlYm');
 interface HomeProps {
-  nicknameList: Nickname[]
+  nicknameList: Nickname[],
+  topNickname: Nickname
 }
 
-export default function Home({ nicknameList }: HomeProps) {
+export default function Home({ nicknameList, topNickname }: HomeProps) {
   const handleClick = async (name, amount) => {
     const stripe = await stripeTestPromise;
     const response = await axios.post("/api/create-checkout-session", {
@@ -35,8 +35,6 @@ export default function Home({ nicknameList }: HomeProps) {
     }
   };
 
-
-
   return (
     <div className='min-h-screen flex items-center flex-col bg-background scroll-snap-none relative'>
       <Head>
@@ -46,39 +44,50 @@ export default function Home({ nicknameList }: HomeProps) {
       </Head>
 
       <div className='w-full mt-8 px-4 max-w-screen-2xl z-10'>
-        <Header/>
+        <Header />
 
         <div className='flex flex-col items-center justify-between mb-8 sm:flex-row mt-6'>
           <div className='rounded-lg w-full lg:w-3/5 lg:mr-12 flex flex-col'>
-            <h1 className='leading-snug text-4xl font-bold text-white lg:leading-snug lg:text-6xl'>Leave Your Mark <br/>like <span className='text-main'>Pipo</span></h1>
+            <h1 className='leading-snug text-4xl font-bold text-white lg:leading-snug lg:text-6xl'>Leave Your Mark <br />like <span className='text-main'>Pipo</span></h1>
             <p className='text-1x1 lg:text-2xl text-white mt-3'>
-              We want to make 1 US$ in the internet to prove to our parents. loren ipsun sdafjasjd gfjsda gjsadg asdgj 
+              We want to make 1 US$ in the internet to prove to our parents. loren ipsun sdafjasjd gfjsda gjsadg asdgj
             </p>
           </div>
           <div className='w-full mt-8 lg:w-2/5 lg:mt-0 '>
-            <Checkout handleClick={handleClick} />
+            <Checkout handleClick={handleClick} topNickname={topNickname} />
           </div>
         </div>
 
-        <RankingList persons={nicknameList}/>
+        <RankingList persons={nicknameList} />
       </div>
     </div>
   )
 }
 
-
 export const getServerSideProps: GetServerSideProps = async () => {
-  const nicknames = await prisma.nicknameEntity.findMany({
-    include: {
-      donations: true
-    },
-  })
-  const sortedNicknames = nicknames
-    .map<Nickname>(NicknameTransformer.mapTo)
-    .sort((nicknameA, nicknameB) => nicknameA.amount - nicknameB.amount);
+  //@ts-ignore: Prisma typescript error with orderBy
+  const result: DonationEntity & { _sum: { amount: number } }[] = await prisma.donationEntity.groupBy({ by: ["nickname"], _sum: { amount: true } });
+
+  const nicknames = result.map(NicknameTransformer.mapTo);
+
   return {
     props: {
-      nicknameList: sortedNicknames
+      nicknameList: await getSortedNicknames(nicknames),
+      topNickname: await getTopNickname(nicknames)
     }
   }
+}
+
+const getSortedNicknames = async (nicknames: Nickname[]): Promise<Nickname[]> => {
+  return nicknames
+    .sort((nicknameA, nicknameB) => nicknameA.amount - nicknameB.amount);
+}
+
+const getTopNickname = async (nicknames: Nickname[]): Promise<Nickname> => {
+  return nicknames.reduce((accumulator, currentValue) => {
+    console.log(accumulator, currentValue)
+    if (currentValue.amount > accumulator.amount)
+      return currentValue;
+    return accumulator;
+  });
 }
