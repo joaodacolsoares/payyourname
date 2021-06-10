@@ -72,20 +72,19 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
   return {
     props: {
-      nicknameList: await getSortedNicknames(nicknames),
-      topNickname: await getTopNickname(nicknames)
+      nicknameList: getSortedNicknames(nicknames),
+      topNickname: getTopNickname(nicknames)
     }
   }
 }
 
-const getSortedNicknames = async (nicknames: Nickname[]): Promise<Nickname[]> => {
+const getSortedNicknames = (nicknames: Nickname[]): Nickname[] => {
   return nicknames
-    .sort((nicknameA, nicknameB) => nicknameA.amount - nicknameB.amount);
+    .sort((nicknameA, nicknameB) => nicknameB.amount - nicknameA.amount);
 }
 
-const getTopNickname = async (nicknames: Nickname[]): Promise<Nickname> => {
+const getTopNickname = (nicknames: Nickname[]): Nickname => {
   return nicknames.reduce((accumulator, currentValue) => {
-    console.log(accumulator, currentValue)
     if (currentValue.amount > accumulator.amount)
       return currentValue;
     return accumulator;
