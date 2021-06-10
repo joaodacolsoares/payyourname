@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import { NicknameContext } from '../contexts/NicknameContext'
 
 interface PaymentFormProps {
   handleClick: (name: string, amount: number) => void
@@ -7,6 +8,8 @@ interface PaymentFormProps {
 export default function Checkout({ handleClick } : PaymentFormProps) {
   const [name, setName] = useState('')
   const [amount, setAmount] = useState()
+  const { getTopNickname } = useContext(NicknameContext)
+  const topNickname = getTopNickname()
 
   const onNameChange = (event) => {
     const { value } = event.target
@@ -31,11 +34,14 @@ export default function Checkout({ handleClick } : PaymentFormProps) {
           placeholder='$ 0,00'
           onChange={onAmountChange}
           value={amount}/>
-        <p className='text-gray-500 w-4/5 text-sm text-center mb-5'>To take the first place from 
-          <span className='text-white'> Pipo </span> 
-          you need to pay 
-          <span className='text-main'> 0.01 US$</span>
-        </p>
+        {
+          topNickname && 
+          <p className='text-gray-500 w-4/5 text-sm text-center mb-5'>To take the first place from 
+            <span className='text-white'> { topNickname.name } </span> 
+            you need to pay 
+            <span className='text-main'> { topNickname.amount/100 } US$</span>
+          </p>
+        }
       </div>
       <button 
         className='bg-main w-full font-bold bg-blue-500 text-white text-lg p-4 rounded hover:opacity-70 transition-all' 
