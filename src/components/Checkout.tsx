@@ -22,7 +22,7 @@ export default function Checkout({ handleClick } : PaymentFormProps) {
   } 
 
   return (
-    <section className='w-full from-black-to-transparent p-5 h-full justify-center box-border border-secondary-black border flex flex-col blur-md rounded-md'>
+    <section className='relative w-full from-black-to-transparent p-5 h-full justify-center box-border border-secondary-black border flex flex-col blur-md rounded-md'>
       <div className="flex flex-col mb-2 items-center">
         <input 
           className="p-3 w-full border-b-2 text-white bg-transparent border-white placeholder-gray-400 mb-2" 
@@ -49,6 +49,9 @@ export default function Checkout({ handleClick } : PaymentFormProps) {
         onClick={() => handleClick(name, amount)}>
         Pay your name
       </button>
+
+      <img className='absolute right-3/4 top-3/4 max-w-7xl w-auto h-auto hidden lg:flex' src="/hand.png" alt="" />
+
     </section>
   )
 }

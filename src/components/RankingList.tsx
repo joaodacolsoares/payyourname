@@ -8,7 +8,7 @@ export default function RankingList() {
 
   return (
     <>
-      <h2 className='mb-4 text-4xl text-white font-bold'>Ranking</h2>
+      <h2 className='z-10 relative mb-4 text-4xl text-white font-bold'>Ranking</h2>
       <ol>
         {
           getNicknameList()
