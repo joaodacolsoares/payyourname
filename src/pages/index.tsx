@@ -52,7 +52,7 @@ export default function Home({ nicknameList }: HomeProps) {
           <Header/>
 
           <div className='flex flex-col items-start justify-between mb-8 sm:flex-row mt-6'>
-            <div className='rounded-lg w-full lg:w-3/5 lg:mr-16 flex flex-col'>
+            <div className='relative z-10 rounded-lg w-full lg:w-3/5 lg:mr-16 flex flex-col'>
               <Presentation />
             </div>
             <div className='w-full mt-8 lg:w-2/5 lg:mt-0 '>
