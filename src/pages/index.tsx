@@ -13,7 +13,7 @@ import prisma from '../lib/prisma'
 import { NicknameProvider } from '../contexts/NicknameContext'
 import Presentation from '../components/Presentation'
 
-const stripeTestPromise = loadStripe('pk_test_51IyfoeG8cr2ZNrKwwE36Nd7s2ZsCw7iHPAS9Lc52SiCX0PwvdiLUnZzDj5R3dF7AENbia5dh51sUmUjyoPvHxrKY00X09AGlYm');
+const stripeTestPromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE);
 interface HomeProps {
   nicknameList: Nickname[]
 }
