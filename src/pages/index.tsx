@@ -1,25 +1,25 @@
 import Head from 'next/head'
+import Image from 'next/image'
 import Header from '../components/Header'
 import RankingList from '../components/RankingList'
 import Nickname from '../interfaces/Nickname'
 import { loadStripe } from '@stripe/stripe-js'
-import ProductSession from '../components/ProductSession'
+import Checkout from '../components/Checkout'
 import axios from 'axios'
 import { GetServerSideProps, GetServerSidePropsContext } from 'next'
 import { NicknameTransformer } from '../transformer/NicknameTransformer'
 import { useState } from 'react'
 import prisma from '../lib/prisma'
+import { NicknameProvider } from '../contexts/NicknameContext'
+import Presentation from '../components/Presentation'
 
-const stripeTestPromise = loadStripe('pk_test_51IyfoeG8cr2ZNrKwwE36Nd7s2ZsCw7iHPAS9Lc52SiCX0PwvdiLUnZzDj5R3dF7AENbia5dh51sUmUjyoPvHxrKY00X09AGlYm');
+const stripeTestPromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE);
 interface HomeProps {
   nicknameList: Nickname[]
 }
 
 export default function Home({ nicknameList }: HomeProps) {
-  const [name, setName] = useState('')
-  const [amount, setAmount] = useState()
-
-  const handleClick = async () => {
+  const handleClick = async (name, amount) => {
     const stripe = await stripeTestPromise;
     const response = await axios.post("/api/create-checkout-session", {
       nickname: name,
@@ -37,54 +37,49 @@ export default function Home({ nicknameList }: HomeProps) {
     }
   };
 
-  const onNameChange = (event) => {
-    const { value } = event.target
-    setName(value)
-  }
 
-  const onAmountChange = (event) => {
-    const { value } = event.target
-    setAmount(value)
-  }
 
   return (
-    <div className='min-h-screen flex items-center flex-col'>
-      <Head>
-        <title>Eternity</title>
-        <meta name='description' content='Eternity App' />
-        <link rel='icon' href='/favicon.ico' />
-      </Head>
+    <NicknameProvider nicknames={nicknameList}>
+      <div className='min-h-screen flex items-center flex-col bg-background scroll-snap-none relative'>
+        <Head>
+          <title>Eternity</title>
+          <meta name='description' content='Eternity App' />
+          <link rel='icon' href='/favicon.ico' />
+        </Head>
 
-      <Header/>
+        <div className='w-full mt-8 px-12 z-10'>
+          <Header/>
 
-      <div className='max-w-5xl w-full mt-8'>
-        <div className='flex flex-col items-stretch justify-between mb-8 sm:flex-row'>
-          <div className='p-5 bg-gray-100 rounded-lg w-full sm:w-2/4 mr-2 flex flex-col'>
-            <input className='mb-4 p-4 rounded' placeholder='Name' onChange={onNameChange} value={name}/>
-            <input className='p-4 rounded' placeholder='US$ 0,00 ' onChange={onAmountChange} value={amount} />
+          <div className='flex flex-col items-start justify-between mb-8 sm:flex-row mt-6'>
+            <div className='relative z-10 rounded-lg w-full lg:w-3/5 lg:mr-16 flex flex-col'>
+              <Presentation />
+            </div>
+            <div className='w-full mt-8 lg:w-2/5 lg:mt-0 '>
+              <Checkout handleClick={handleClick} />
+            </div>
           </div>
-          <div className='w-full sm:w-2/4'>
-            <ProductSession handleClick={handleClick} price={amount}/>
-          </div>
+
+          <RankingList />
         </div>
-
-        <RankingList persons={nicknameList}/>
       </div>
-    </div>
+    </NicknameProvider>
   )
 }
 
 
-export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const nicknames = await prisma.nicknameEntity.findMany({
-    orderBy: [{
-      amount: 'desc'
-    }]
+    include: {
+      donations: true
+    },
   })
-
+  const sortedNicknames = nicknames
+    .map<Nickname>(NicknameTransformer.mapTo)
+    .sort((nicknameA, nicknameB) => nicknameB.amount - nicknameA.amount);
   return {
     props: {
-      nicknameList: nicknames.map<Nickname>(NicknameTransformer.mapTo)
+      nicknameList: sortedNicknames
     }
   }
 }
