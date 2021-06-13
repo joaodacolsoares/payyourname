@@ -14,7 +14,8 @@ export default function Presentation() {
         } 
       </h1>
       <p className='text-1x1 lg:text-2xl text-white mt-3'>
-        We want to make 1 US$ in the internet to prove to our parents. loren ipsun sdafjasjd gfjsda gjsadg asdgj 
+        We are trying to prove to ourselves that we can make a production-enabled website. 
+        Support us by donating as little as <strong>0,01 US$</strong> to leave your mark forever in our hearts.
       </p>
     </>
   );
