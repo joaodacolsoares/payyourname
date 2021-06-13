@@ -25,15 +25,15 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       return res.status(400).send(`Webhook Error: ${err.message}`);
     }
 
-    if (event.type === 'checkout.session.completed') {
+    if (event.type === 'payment_intent.succeeded') {
       const session = event.data.object;
       const { nickname, amount } = session.metadata
 
       await createNicknameIfNotExists(nickname);
       await createDonation(nickname, amount);
-
-      res.status(200);
     }
+    
+    res.status(200);
   }
 }
 
