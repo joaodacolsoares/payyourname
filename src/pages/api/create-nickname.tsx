@@ -35,8 +35,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         await createDonation(nickname, amount);
       }
     }
-    
-    res.status(200);
+    res.status(201).json({ });
   }
 }
 

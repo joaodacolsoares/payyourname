@@ -14,7 +14,7 @@ export default function Presentation() {
         } 
       </h1>
       <p className='text-1x1 lg:text-2xl text-white mt-3'>
-        We are trying to prove to ourselves that we can make a production-enabled website. 
+        We are trying to prove to ourselves that we can make a production-enabled website.
         Support us by donating as little as <strong>0,01 US$</strong> to leave your mark forever in our hearts.
       </p>
     </>
