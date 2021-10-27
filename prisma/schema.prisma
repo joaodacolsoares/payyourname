@@ -1,23 +1,27 @@
-generator client {
-  provider = "prisma-client-js"
-}
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider             = "mysql"
+  url                  = env("DATABASE_URL")
+  shadowDatabaseUrl    = env("SHADOW_DATABASE_URL")
+  referentialIntegrity = "prisma"
+}
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = [ "referentialIntegrity" ]
 }
 
 model NicknameEntity {
-  name String @id
+  name      String           @id
   donations DonationEntity[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
 }
 
 model DonationEntity {
-  id Int @id @default(autoincrement())
-  name NicknameEntity @relation(fields: [nickname], references: [name])
-  nickname String
-  amount Float
-  createdAt DateTime @default(now())
+  id        Int            @id @default(autoincrement())
+  name      NicknameEntity @relation(fields: [nickname], references: [name])
+  nickname  String
+  amount    Float
+  createdAt DateTime       @default(now())
 }

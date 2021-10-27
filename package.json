@@ -9,11 +9,11 @@
     "postinstall": "prisma generate"
   },
   "dependencies": {
-    "@prisma/client": "^2.24.1",
+    "@prisma/client": "^3.3.0",
     "micro": "^9.3.4",
     "next": "10.2.0",
     "pg": "^8.6.0",
-    "prisma": "^2.24.1",
+    "prisma": "^3.3.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "stripe": "^8.152.0",
