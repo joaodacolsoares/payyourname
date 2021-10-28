@@ -22,7 +22,7 @@ export default function Checkout({ handleClick } : PaymentFormProps) {
   } 
 
   return (
-    <section className='w-full from-black-to-transparent p-5 h-full justify-center box-border border-secondary-black border flex flex-col blur-md rounded-md'>
+    <section className='w-full from-black-to-transparent p-5 h-full justify-center box-border border-secondary-black border flex flex-col rounded-md'>
       <div className="flex flex-col mb-2 items-center">
         <input 
           className="p-3 w-full border-b-2 text-white bg-transparent border-white placeholder-gray-400 mb-2" 

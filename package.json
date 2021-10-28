@@ -11,7 +11,7 @@
   "dependencies": {
     "@prisma/client": "^3.3.0",
     "micro": "^9.3.4",
-    "next": "10.2.0",
+    "next": "latest",
     "pg": "^8.6.0",
     "prisma": "^3.3.0",
     "react": "17.0.2",
@@ -27,6 +27,6 @@
     "axios": "^0.21.1",
     "dotenv": "^10.0.0",
     "postcss": "^8.2.15",
-    "tailwindcss": "^2.1.2"
+    "tailwindcss": "^2.2.17"
   }
 }
