@@ -48,7 +48,7 @@ export default function Home({ nicknameList }: HomeProps) {
           <link rel='icon' href='/favicon.ico' />
         </Head>
 
-        <div className='max-w-screen-xl mt-8 px-5 mb-16 md:mb-0 md:px-12 z-10'>
+        <div className='max-w-screen-xl mt-8 px-5 mb-24 md:mb-0 md:px-12 z-10'>
           <Header/>
 
           <div className='flex flex-col items-start justify-between mb-8 sm:flex-row mt-6'>
