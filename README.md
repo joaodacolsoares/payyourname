@@ -1,9 +1,9 @@
-# Eternity
+# Pay your name
 
 ## Quick setup
 - Clone the repository with 
 ```
-  git clone https://github.com/joaodacolsoares/eternity.git
+  git clone https://github.com/joaodacolsoares/payyourname.git
 ```
 
 - Install all the dependencies with the command:
