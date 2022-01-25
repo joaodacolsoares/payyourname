@@ -12,7 +12,7 @@ export default function RankingListItem({ index, person } : RankingListItemProps
         <div className={` ${index == 1 ? 'bg-main' : 'bg-gray-700'} w-8 h-8 flex items-center justify-center rounded-full mr-6`}>{index}</div>
         <span className='font-bold'>{person.name}</span> 
       </div>
-      <span>US$ {person.amount / 100}</span>
+      <span>US$ {person.amount}</span>
     </li>
   );
 }
