@@ -4,7 +4,6 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET);
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'POST') {
     let { nickname, amount } = req.body
-
     const session = await stripe.checkout.sessions.create({ 
       payment_method_types: ['card'],
       line_items: [
@@ -15,7 +14,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
               name: 'Nickname',
               images: ['https://i.imgur.com/EHyR2nP.png'],
             },
-            unit_amount: amount,
+            unit_amount: amount * 100,
           },
           quantity: 1,
         },

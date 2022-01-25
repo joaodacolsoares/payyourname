@@ -20,10 +20,12 @@ interface HomeProps {
 
 export default function Home({ nicknameList }: HomeProps) {
   const handleClick = async (name, amount) => {
+    if(!amount || !name ) return
+    
     const stripe = await stripeTestPromise;
     const response = await axios.post("/api/create-checkout-session", {
       nickname: name,
-      amount: (amount || 0) * 100
+      amount
     });
     const session = response.data;
     const result = await stripe.redirectToCheckout({
