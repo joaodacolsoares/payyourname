@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { NicknameContext } from '../contexts/NicknameContext'
+import NumberFormat from 'react-number-format';
 
 interface PaymentFormProps {
   handleClick: (name: string, amount: number) => void
@@ -16,9 +17,8 @@ export default function Checkout({ handleClick } : PaymentFormProps) {
     setName(value)
   }
 
-  const onAmountChange = (event) => {
-    const { value } = event.target
-    setAmount(value)
+  const onAmountChange = ({ floatValue }) => {
+    setAmount(floatValue)
   } 
 
   return (
@@ -29,10 +29,20 @@ export default function Checkout({ handleClick } : PaymentFormProps) {
           placeholder='Your name'
           onChange={onNameChange}
           value={name}/>
-        <input 
+        <NumberFormat 
           className="p-3 w-full border-b-2 text-white bg-transparent border-white placeholder-gray-400 mb-2" 
           placeholder='$ 0,00'
-          onChange={onAmountChange}
+          thousandsGroupStyle="thousand"
+          allowNegative={false}
+          prefix='$'
+          inputMode="decimal"
+          decimalSeparator=","
+          thousandSeparator="."
+          displayType="input"
+          type="text"
+          decimalScale={2}
+          onValueChange={onAmountChange}
+          fixedDecimalScale={true}
           value={amount}/>
         {
           topNickname && 
@@ -44,8 +54,9 @@ export default function Checkout({ handleClick } : PaymentFormProps) {
         }
       </div>
       <button 
-        className='bg-main w-full font-bold bg-blue-500 text-white text-lg p-4 rounded hover:opacity-70 transition-all' 
-        type="button" 
+        className='bg-main w-full font-bold bg-blue-500 text-white text-lg p-4 rounded hover:opacity-70 transition-all disabled:opacity-50 disabled:cursor-not-allowed' 
+        type="button"
+        disabled={!amount || !name}
         onClick={() => handleClick(name, amount)}>
         Pay your name
       </button>
