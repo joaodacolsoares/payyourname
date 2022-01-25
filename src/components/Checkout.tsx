@@ -49,7 +49,7 @@ export default function Checkout({ handleClick } : PaymentFormProps) {
           <p className='text-gray-500 w-4/5 text-sm text-center mb-5'>To take the first place from 
             <span className='text-white'> { topNickname.name } </span> 
             you need to pay 
-            <span className='text-main'> { topNickname.amount/100 } US$</span>
+            <span className='text-main'> { topNickname.amount } US$</span>
           </p>
         }
       </div>
