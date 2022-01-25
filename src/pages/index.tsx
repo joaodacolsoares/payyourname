@@ -63,9 +63,18 @@ export default function Home({ nicknameList }: HomeProps) {
           <RankingList />
         </div>
 
-        <img className='absolute w-96 h-96 -left-36 bottom-14  lg:flex' src="/blob.gif" alt="" />
-        <img className='absolute w-64 h-64 right-1 bottom-0 hidden lg:flex' src="/blob.gif" alt="" />
-        <img className='absolute w-72 h-72 left-3/4 top-1 hidden lg:flex' src="/blob.gif" alt="" />
+        <img
+          className="absolute w-96 h-96 -left-36 bottom-14 lg:flex"
+          src="/blob_1.gif"
+        />
+        <img
+          className="absolute w-64 h-64 right-1 bottom-0 hidden lg:flex"
+          src="/blob_2.gif"
+        />
+        <img
+          className="absolute w-72 h-72 left-3/4 top-1 hidden lg:flex"
+          src="/blob_3.gif"
+        />
       </div>
     </NicknameProvider>
   )
