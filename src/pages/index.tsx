@@ -8,10 +8,11 @@ import Checkout from '../components/Checkout'
 import axios from 'axios'
 import { GetServerSideProps, GetServerSidePropsContext } from 'next'
 import { NicknameTransformer } from '../transformer/NicknameTransformer'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import prisma from '../lib/prisma'
 import { NicknameProvider } from '../contexts/NicknameContext'
 import Presentation from '../components/Presentation'
+import { useAnalytics } from 'use-analytics'
 
 const stripeTestPromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE);
 interface HomeProps {
@@ -19,8 +20,16 @@ interface HomeProps {
 }
 
 export default function Home({ nicknameList }: HomeProps) {
+  const { track, page } = useAnalytics()
+
+  useEffect(() => {
+    page()
+  }, [])
+  
   const handleClick = async (name, amount) => {
     if(!amount || !name ) return
+    
+    track('open_checkout');
     
     const stripe = await stripeTestPromise;
     const response = await axios.post("/api/create-checkout-session", {
