@@ -45,8 +45,8 @@ export default function Home({ nicknameList }: HomeProps) {
     <NicknameProvider nicknames={nicknameList}>
       <div className='min-h-screen flex items-center flex-col bg-background scroll-snap-none relative'>
         <Head>
-          <title>Pay your name</title>
-          <meta name='description' content='Pay your name App' />
+          <title>Pay Your Name</title>
+          <meta name='description' content='Pay Your Name App' />
           <link rel='icon' href='/favicon.ico' />
         </Head>
 
