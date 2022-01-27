@@ -1,5 +1,5 @@
-import { DonationEntity, NicknameEntity } from ".prisma/client";
-import Nickname from "../interfaces/Nickname";
+import { DonationEntity, NicknameEntity } from '.prisma/client';
+import Nickname from '../interfaces/Nickname';
 
 interface Mapper<T, V> {
   mapTo(to: T): V;
@@ -11,7 +11,5 @@ export const NicknameTransformer = {
       .map(donation => donation.amount)
       .reduce((accumulator, currentValue) => accumulator + currentValue);
     return { name: nickname.name, amount: getTotalValue };
-  }
+  },
 } as Mapper<NicknameEntity, Nickname>;
-
-

@@ -1,5 +1,5 @@
-declare module NodeJS  {
+declare module NodeJS {
   interface Global {
-    prisma: PrismaClient
+    prisma: PrismaClient;
   }
 }
