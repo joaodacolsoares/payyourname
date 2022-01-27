@@ -1,9 +1,10 @@
+import { DonationEntity, NicknameEntity, PrismaClient } from '@prisma/client';
 import { buffer } from 'micro';
-import { NextApiRequest, NextApiResponse } from "next"
-import { DonationEntity, NicknameEntity, PrismaClient } from '@prisma/client'
+import { NextApiRequest, NextApiResponse } from 'next';
+
 import prisma from '../../lib/prisma';
 
-const Stripe = require('stripe')
+const Stripe = require('stripe');
 const stripe = Stripe(process.env.STRIPE_SECRET);
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
@@ -11,7 +12,7 @@ export const config = {
   api: {
     bodyParser: false,
   },
-}
+};
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'POST') {
@@ -29,32 +30,32 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       const session = event.data.object;
 
       if (session.payment_status === 'paid') {
-        const { nickname, amount } = session.metadata
-  
+        const { nickname, amount } = session.metadata;
+
         await createNicknameIfNotExists(nickname);
         await createDonation(nickname, amount);
       }
     }
-    res.status(201).json({ });
+    res.status(201).json({});
   }
-}
+};
 
 const createNicknameIfNotExists = async (nickname: string) => {
   const nicknameEntity = await prisma.nicknameEntity.findFirst({ where: { name: nickname } });
   if (!nicknameEntity) {
     await prisma.nicknameEntity.create({
       data: {
-        name: nickname
-      }
-    })
+        name: nickname,
+      },
+    });
   }
-}
+};
 
 const createDonation = async (nickname: string, amountToBeAdded: string) => {
   await prisma.donationEntity.create({
     data: {
       amount: Number.parseFloat(amountToBeAdded),
-      nickname: nickname
-    }
+      nickname: nickname,
+    },
   });
-}
+};

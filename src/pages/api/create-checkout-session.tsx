@@ -1,10 +1,11 @@
-import { NextApiRequest, NextApiResponse } from "next"
+import { NextApiRequest, NextApiResponse } from 'next';
+
 const stripe = require('stripe')(process.env.STRIPE_SECRET);
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'POST') {
-    let { nickname, amount } = req.body
-    const session = await stripe.checkout.sessions.create({ 
+    let { nickname, amount } = req.body;
+    const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: [
         {
@@ -21,13 +22,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       ],
       metadata: {
         nickname,
-        amount
+        amount,
       },
       mode: 'payment',
       success_url: `${req.headers.origin}/?success=true`,
       cancel_url: `${req.headers.origin}/?canceled=true`,
-    })
+    });
 
     res.json({ id: session.id });
   }
-}
+};

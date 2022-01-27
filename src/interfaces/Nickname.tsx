@@ -1,4 +1,4 @@
 export default interface Nickname {
-  name: string,
-  amount: number
+  name: string;
+  amount: number;
 }
