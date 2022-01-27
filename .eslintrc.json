@@ -1,0 +1,30 @@
+{
+  "extends": ["next/core-web-vital", "prettier"],
+  "rules": {
+    "no-nested-ternary": "off",
+    "no-underscore-dangle": "off",
+    "import/no-extraneous-dependencies": "warn",
+    "import/no-unresolved": "off",
+    "import/order": [
+      "error",
+      {
+        "alphabetize": {
+          "caseInsensitive": true,
+          "order": "asc"
+        },
+        "newlines-between": "always"
+      }
+    ],
+    "react/jsx-sort-props": [
+      "error",
+      {
+        "callbacksLast": true,
+        "shorthandFirst": false,
+        "shorthandLast": true,
+        "ignoreCase": true,
+        "noSortAlphabetically": false,
+        "reservedFirst": true
+      }
+    ]
+  }
+}
