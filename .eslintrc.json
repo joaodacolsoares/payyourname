@@ -1,5 +1,5 @@
 {
-  "extends": ["next/core-web-vital", "prettier"],
+  "extends": ["next", "prettier"],
   "rules": {
     "no-nested-ternary": "off",
     "no-underscore-dangle": "off",
